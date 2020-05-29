@@ -5,6 +5,7 @@ import { Link, withRouter } from 'react-router-dom';
 const links = [
     { name: 'Home',         link: '/' },
     { name: 'LogIn',        link: '/LogIn' },
+    { name: 'SignUp',       link: '/SignUp' },
     { name: 'Dashboard',    link: '/Dashboard' },
 ];
 

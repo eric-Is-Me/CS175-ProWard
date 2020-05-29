@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 
 import Home from './pages/Home/Home.js'
 import LogIn from './pages/LogIn/LogIn.js'
+import SignUp from './pages/SignUp/SignUp.js'
 import Dashboard from './pages/Dashboard/Dashboard.js'
 
 export default class Content extends Component {
@@ -30,6 +31,11 @@ export default class Content extends Component {
                     exact
                     path="/LogIn"
                     component={LogIn}
+                />
+                <Route
+                    exact
+                    path="/SignUp"
+                    component={SignUp}
                 />
                 {/* <Route component={errorPage} /> */}
             </Switch>
