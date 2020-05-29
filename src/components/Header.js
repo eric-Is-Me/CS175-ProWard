@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
-import { Menu, Segment, Responsive, Dropdown } from 'semantic-ui-react';
+import { Menu } from 'semantic-ui-react';
 import { Link, withRouter } from 'react-router-dom';
 
 const links = [
-    { name: 'Home',                link: '/' },
-    { name: 'LogIn',     link: '/LogIn' },
-    { name: 'Dashboard',               link: '/Dashboard' },
+    { name: 'Home',         link: '/' },
+    { name: 'LogIn',        link: '/LogIn' },
+    { name: 'Dashboard',    link: '/Dashboard' },
 ];
 
-class Header extends React.Component{
+class Header extends Component{
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
     getActiveItem = () => {
         for ( var i in links){
-        if (this.props.location.pathname == links[i].link){
-            return links[i].name;
-        } 
+            if (this.props.location.pathname === links[i].link){
+                return links[i].name;
+            } 
         }
         return 'Map';
     }
@@ -30,15 +30,14 @@ class Header extends React.Component{
                 <Menu pointing secondary >
                 {
                     links.map( (i, idx) => {
-                    if ( i.name !== 'divider')
                         return (
-                        <Menu.Item
-                            name = {i.name}
-                            active = {activeItem === i.name}
-                            onClick = {this.handleItemClick}
-                            as = {Link} 
-                            to = {i.link}
-                        />
+                            <Menu.Item
+                                name = {i.name}
+                                active = {activeItem === i.name}
+                                onClick = {this.handleItemClick}
+                                as = {Link} 
+                                to = {i.link}
+                            />
                         );
                     })
                 }
