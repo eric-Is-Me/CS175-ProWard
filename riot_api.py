@@ -1,6 +1,6 @@
 import requests
 
-api_key = "RGAPI-3393b39f-548a-46e5-b636-e10dc64a17a3"
+api_key = "RGAPI-662349ed-9a07-4632-b76a-36c103558c78"
 
 def requestSummonerName(region, summonerName):
     URL = "https://" + region + ".api.riotgames.com/lol/summoner/v4/summoners/by-name/" + summonerName + '?api_key=' + api_key
@@ -14,10 +14,16 @@ def requestSummonerMastery(region, summonerID):
 
 #def request other stuff
 
-def allknowing(region, accountID):
+def requestMatchList(region, accountID):
     URL = 'https://' + region + '.api.riotgames.com/lol/match/v4/matchlists/by-account/' + accountID + '?api_key=' + api_key
     response = requests.get(URL)
     return response.json()
+
+def requestMatchInfo(region, matchID):
+    URL = 'https://' + region + '.api.riotgames.com/lol/match/v4/matches/' + matchID + '?api_key=' + api_key
+    response = requests.get(URL)
+    return response.json()
+   
 
 
 region = (str)(input('Type in a region: '))
@@ -25,28 +31,76 @@ summonerName = (str)(input('Type in a summoner name: '))
 
 name_JSON = requestSummonerName(region, summonerName)
 summonerID = name_JSON['id']
+# total account game mastery
 summonerMastery = requestSummonerMastery(region, summonerID)
 
-print(summonerID)
-print(summonerMastery)
-
 accountID = name_JSON['accountId']
-allinfo = allknowing(region,accountID)
-print(allinfo)
-'''
-API_version = {
- #       '/lol/champion-mastery/v4/scores/by-summoner/{encryptedSummonerId}'
-    'CHAMPION-MASTERY': '4'
-        }
+matchlist_JSON = requestMatchList(region, accountID)
+matchId = matchlist_JSON['matches'][0]['gameId']
+matchID = str(matchId)
+match_JSON = requestMatchInfo(region, matchID)
 
-REGIONS = {
-        'North_America': 'NA1'
-        }
-'''
+for pNo in range(10):
+    participantName = match_JSON['participantIdentities'][pNo]['player']['summonerName']
+    participantName = str(participantName)
+    #print("pName:",participantName)
+    if (participantName.lower() == summonerName.lower()):
+        partID = match_JSON['participantIdentities'][pNo]['participantId']
+        break
+#print("participant ID:", partID)
+
+for pNo in range(10):
+    if (match_JSON['participants'][pNo]['participantId'] == partID):
+        gameDuration = match_JSON['gameDuration']
+        kills = match_JSON['participants'][pNo]['stats']['kills']
+        assists = match_JSON['participants'][pNo]['stats']['assists']
+        deaths = match_JSON['participants'][pNo]['stats']['deaths']        
+        totalDamageDealtToChampions = match_JSON['participants'][pNo]['stats']['totalDamageDealtToChampions']
+        visionScore = match_JSON['participants'][pNo]['stats']['visionScore']
+        goldEarned = match_JSON['participants'][pNo]['stats']['goldEarned']
+        totalMinionsKilled = match_JSON['participants'][pNo]['stats']['totalMinionsKilled']
+        neutralMinionsKilled = match_JSON['participants'][pNo]['stats']['neutralMinionsKilled']
+
+# important in-game stats
+kda = (kills + assists)/deaths
+minutes = int(gameDuration / 60)
+kda = round((kills + assists)/deaths, 2)
+dpm = round(totalDamageDealtToChampions/minutes, 2)
+vision = visionScore
+gpm = round(goldEarned/minutes, 2)
+cs = totalMinionsKilled + neutralMinionsKilled
+
+#championId = requestMatchInfo['championId']
+
+#print(summonerID)
+print("Total Account Mastery:", summonerMastery)
 
 
 #pip the poro id: IS6jAFiLaj6yy3xcSpyIDpTMRvFEG6Vh3ph-I7RVhdyV7_M
+    #my acct
     #90
+    # acct id: fL_4VTvcp3LYbm9S1xQ78FFtZVG_VdWAQgnXeuMROWycN8s
+    # recent gameId: 3402933367
+'''
+Steps to finding game scores
+def-> matchlist by acct
+get "gameId"
+
+def-> match by matchid
+match player id
+
+calc kda = (kills + assists) / deaths
+"gameDuration" (in seconds)
+"totalDamageDealtToChampions"
+"visionScore"
+"goldEarned"
+"totalMinionsKilled"
+"neutralMinionsKilled"
+
+
+#should probably add player acct rank
+'''
+    
 #doublelift id: XV7kJbSAgcQO_JCx8EWs7grADevXPzUlR9QBV6oMvqpjwIg
     #famous pro
     #302
