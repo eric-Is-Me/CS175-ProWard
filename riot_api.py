@@ -48,42 +48,46 @@ for matchNo in range(99):
     matchID = str(matchId[matchNo])
     match_JSON = requestMatchInfo(region, matchID)
     
+    # print (match_JSON)
+    # print (matchNo)
+    if len(match_JSON) > 5:
+         # find correct participant(player) in single match
+        for pNo in range(9):
+            participantName = match_JSON['participantIdentities'][pNo]['player']['summonerName']
+            participantName = str(participantName)
+            if (participantName.lower() == summonerName.lower()):
+                partID = match_JSON['participantIdentities'][pNo]['participantId']
+                break
 
-    # find correct participant(player) in single match
-    for pNo in range(9):
-        participantName = match_JSON['participantIdentities'][pNo]['player']['summonerName']
-        participantName = str(participantName)
-        if (participantName.lower() == summonerName.lower()):
-            partID = match_JSON['participantIdentities'][pNo]['participantId']
-            break
+        # find in-game statistics
+        for pNo in range(9):
+            if (match_JSON['participants'][pNo]['participantId'] == partID):
+                gameDuration = match_JSON['gameDuration']
+                kills = match_JSON['participants'][pNo]['stats']['kills']
+                assists = match_JSON['participants'][pNo]['stats']['assists']
+                deaths = match_JSON['participants'][pNo]['stats']['deaths']        
+                if(deaths == 0):
+                    deaths = 1
+                totalDamageDealtToChampions = match_JSON['participants'][pNo]['stats']['totalDamageDealtToChampions']
+                visionScore = match_JSON['participants'][pNo]['stats']['visionScore']
+                goldEarned = match_JSON['participants'][pNo]['stats']['goldEarned']
+                totalMinionsKilled = match_JSON['participants'][pNo]['stats']['totalMinionsKilled']
+                neutralMinionsKilled = match_JSON['participants'][pNo]['stats']['neutralMinionsKilled']
+        
+        #minutes.append(int(gameDuration / 60))
+        minutes = int(gameDuration / 60)
+        seconds = gameDuration % 60
+        gameTime = str(minutes) + ':' + str(seconds)
+        gameTime = str(gameTime)
+        kda.append(round((kills + assists) / deaths, 2))
+        dpm.append(round(totalDamageDealtToChampions/gameDuration/60, 2))
+        vision.append(visionScore)
+        gpm.append(round(goldEarned/gameDuration/60, 2))
+        cs.append(totalMinionsKilled + neutralMinionsKilled)
 
-    # find in-game statistics
-    for pNo in range(9):
-        if (match_JSON['participants'][pNo]['participantId'] == partID):
-            gameDuration = match_JSON['gameDuration']
-            kills = match_JSON['participants'][pNo]['stats']['kills']
-            assists = match_JSON['participants'][pNo]['stats']['assists']
-            deaths = match_JSON['participants'][pNo]['stats']['deaths']        
-            if(deaths == 0):
-                deaths = 1
-            totalDamageDealtToChampions = match_JSON['participants'][pNo]['stats']['totalDamageDealtToChampions']
-            visionScore = match_JSON['participants'][pNo]['stats']['visionScore']
-            goldEarned = match_JSON['participants'][pNo]['stats']['goldEarned']
-            totalMinionsKilled = match_JSON['participants'][pNo]['stats']['totalMinionsKilled']
-            neutralMinionsKilled = match_JSON['participants'][pNo]['stats']['neutralMinionsKilled']
-    
-    #minutes.append(int(gameDuration / 60))
-    minutes = int(gameDuration / 60)
-    seconds = gameDuration % 60
-    gameTime = str(minutes) + ':' + str(seconds)
-    gameTime = str(gameTime)
-    kda.append(round((kills + assists) / deaths, 2))
-    dpm.append(round(totalDamageDealtToChampions/gameDuration/60, 2))
-    vision.append(visionScore)
-    gpm.append(round(goldEarned/gameDuration/60, 2))
-    cs.append(totalMinionsKilled + neutralMinionsKilled)
-
-    print(kda)
+        print(kda)
+    else:
+        print ("skipped")
 
 
 # total account game mastery
