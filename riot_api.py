@@ -242,9 +242,4 @@ plot_bar_kda()
 #c9 zvennn  id: RT0KducVYCbEwdnUrfQg5c1sh2LzIS2vXYuff336wrMeOo4
     #rank 1
     #mastery: 315
-#tl tactical id: t5G8-JWkv9AvJqPIApk-nxiH0hd2kUZ1lnT_lTlKEvtXNpvM
-    #rank 3
-    #mastery: 290
-#c9 zven id: WlP8-ALvIffYzMgcSLoA2Cj6zXqNtKXw24GEmEDe3azcFXc
-    #rank 5
-    #mastery: 349
+
