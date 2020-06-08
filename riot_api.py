@@ -2,7 +2,7 @@ import requests
 import matplotlib.pyplot as plt
 import numpy as np
 
-api_key = "RGAPI-58f81372-08c2-4217-8177-6ff2dab9e18c"
+api_key = "RGAPI-ff73c43d-d5dd-4855-b04c-fd2294a53260"
 
 def requestSummonerName(region, summonerName):
     URL = "https://" + region + ".api.riotgames.com/lol/summoner/v4/summoners/by-name/" + summonerName + '?api_key=' + api_key
@@ -26,11 +26,7 @@ def requestMatchInfo(region, matchID):
 
 def plot_bar_kda():
     index = np.arange(len(kda))
-    width = 0.3
-    #fig = plt.figure()
-    #ax = fig.add_subplot(111) #??
-    #rect1 = ax.bar(index, kda, width, color = 'b')
-    
+    width = 0.3    
     index2 = np.arange(len(kda2))
     rect1 = plt.bar(index, kda, width, color='b')
     rect2 = plt.bar(index2 + width, kda2, width, color='r')
@@ -43,43 +39,56 @@ def plot_bar_kda():
 
 def plot_bar_dpm():
     index = np.arange(len(dpm))
+    width = 0.3    
     index2 = np.arange(len(dpm2))
-    plt.bar(index, dpm, col='b')
-    plt.bar(index2, dpm2, col='r')
+    rect1 = plt.bar(index, dpm, width, color='b')
+    rect2 = plt.bar(index2 + width, dpm2, width, color='r')
     plt.xlabel('games', fontsize=10)
     plt.ylabel('DPM score', fontsize=10)
-    plt.title('Average DamagePerMin over ' + str(matchCounter) + ' games: ' + str(avg_dpm))
+    plt.title('Avg DamagePerMin over ' + str(matchCounter) + ' games')
+    plt.legend( (rect1[0], rect2[0]), (summonerName + ' (' + str(avg_dpm) + ')'\
+                                       , summonerName2 + ' (' + str(avg_dpm2) + ')') )
     plt.show()
 
 def plot_bar_cspm():
     index = np.arange(len(cspm))
+    width = 0.3    
     index2 = np.arange(len(cspm2))
-    plt.bar(index, cspm, col='b')
-    plt.bar(index2, cspm2, col='r')
+    rect1 = plt.bar(index, cspm, width, color='b')
+    rect2 = plt.bar(index2 + width, cspm2, width, color='r')
     plt.xlabel('games', fontsize=10)
-    plt.ylabel('CSPM', fontsize=10)
-    plt.title('Average CreepScorePerMin over ' + str(matchCounter) + ' games: ' + str(avg_cspm))
+    plt.ylabel('CSPM score', fontsize=10)
+    plt.title('Avg CreepScorePerMin over ' + str(matchCounter) + ' games')
+    plt.legend( (rect1[0], rect2[0]), (summonerName + ' (' + str(avg_cspm) + ')'\
+                                       , summonerName2 + ' (' + str(avg_cspm2) + ')') )
     plt.show()
-
+    
 def plot_bar_gpm():
     index = np.arange(len(gpm))
+    width = 0.3    
     index2 = np.arange(len(gpm2))
-    plt.bar(index, gpm, col='b')
-    plt.bar(index2, gpm2, col='r')
+    rect1 = plt.bar(index, gpm, width, color='b')
+    rect2 = plt.bar(index2 + width, gpm2, width, color='r')
     plt.xlabel('games', fontsize=10)
     plt.ylabel('GPM score', fontsize=10)
-    plt.title('Average GoldPerMin over ' + str(matchCounter) + ' games: ' + str(avg_gpm))
+    plt.title('Avg GoldPerMin over ' + str(matchCounter) + ' games')
+    plt.legend( (rect1[0], rect2[0]), (summonerName + ' (' + str(avg_gpm) + ')'\
+                                       , summonerName2 + ' (' + str(avg_gpm2) + ')') )
     plt.show()
-
+    
 def plot_bar_vision():
     index = np.arange(len(vision))
+    width = 0.3    
     index2 = np.arange(len(vision2))
-    plt.bar(index, vision, col='b')
-    plt.bar(index2, vision2, col='r')
+    rect1 = plt.bar(index, vision, width, color='b')
+    rect2 = plt.bar(index2 + width, vision2, width, color='r')
     plt.xlabel('games', fontsize=10)
     plt.ylabel('Vision score', fontsize=10)
-    plt.title('Average Vision Score over ' + str(matchCounter) + ' games: ' + str(avg_vision))
+    plt.title('Avg Vision score over ' + str(matchCounter) + ' games')
+    plt.legend( (rect1[0], rect2[0]), (summonerName + ' (' + str(avg_vision) + ')'\
+                                       , summonerName2 + ' (' + str(avg_vision2) + ')') )
     plt.show()
+    
 
 # get region and user info
 region = (str)(input('Type in a region: '))
@@ -151,7 +160,6 @@ for matchNo in range(100):
         gpm.append(round(goldEarned/gameDuration*60, 2))
         cs = totalMinionsKilled + neutralMinionsKilled
         cspm.append(round(cs/gameDuration*60, 2))
-        #matchCounter += 1
         # we only need data for 30 most recent relevant matches
         if matchCounter == 30:
             break
@@ -224,10 +232,10 @@ avg_vision2 = int(sum(vision2)/matchCounter)
 
 
 plot_bar_kda()
-#plot_bar_dpm()
-#plot_bar_cspm()
-#plot_bar_gpm()
-#plot_bar_vision()
+plot_bar_dpm()
+plot_bar_cspm()
+plot_bar_gpm()
+plot_bar_vision()
 
 #print("avg kda: ", round(avg_kda, 2))
 #print("Total Account Mastery:", summonerMastery)
