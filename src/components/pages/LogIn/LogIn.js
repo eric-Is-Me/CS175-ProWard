@@ -92,12 +92,13 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            href="/Dashboard"
           >
             Sign In
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="/" variant="body2">
+              <Link href="" variant="body2">
                 Forgot password?
               </Link>
             </Grid>
