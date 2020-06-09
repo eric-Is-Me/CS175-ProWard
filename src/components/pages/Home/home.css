@@ -1,0 +1,20 @@
+.heroContent { 
+    background: 
+    /* top, transparent red, faked with gradient */ 
+    linear-gradient(
+      rgba(50, 70, 100, 0.85), 
+      rgba(50, 70, 100, 0.85)
+    ),
+    /* bottom, image */
+    url(gamer.jpg);
+    height: 90vh;
+    background-position: center; 
+    background-size: cover; 
+    background-repeat: no-repeat;
+    padding: 20vh;
+}
+
+#greybox {
+    /* background-color: rgba(200, 200, 200, 0.65); */
+    padding: 50px;
+}
