@@ -10,9 +10,11 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
+
+import './home.css'
 
 function Copyright() {
   return (
@@ -27,13 +29,18 @@ function Copyright() {
   );
 }
 
+const WhiteTextTypography = withStyles({
+  root: {
+    color: "#FFFFFF"
+  }
+})(Typography);
+
 const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),
   },
   heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
+    // padding: theme.spacing(8, 0, 6),
   },
   heroButtons: {
     marginTop: theme.spacing(4),
@@ -67,36 +74,38 @@ export default function Album() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <AppBar position="relative">
+      {/* <AppBar position="relative">
         <Toolbar>
           <CameraIcon className={classes.icon} />
           <Typography variant="h6" color="inherit" noWrap>
             Album layout
           </Typography>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
       <main>
         {/* Hero unit */}
-        <div className={classes.heroContent}>
-          <Container maxWidth="sm">
-            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              Album layout
-            </Typography>
-            <Typography variant="h5" align="center" color="textSecondary" paragraph>
-              Something short and leading about the collection below—its contents, the creator, etc.
+        <div className={classes.heroContent, "heroContent"}>
+          <Container maxWidth="sm" id="greybox">
+            <WhiteTextTypography component="h1" variant="h2" align="center" color="white" gutterBottom>
+              Welcome to ProWard!
+            </WhiteTextTypography>
+            <WhiteTextTypography variant="h5" align="center" color="textSecondary" paragraph>
+              Connecting Talent to Teams. <br/>
+              And making players better through intelligent statistics.
+              {/* Something short and leading about the collection below—its contents, the creator, etc.
               Make it short and sweet, but not too short so folks don&apos;t simply skip over it
-              entirely.
-            </Typography>
+              entirely. */}
+            </WhiteTextTypography>
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                  <Button variant="contained" color="primary">
-                    Main call to action
+                  <Button variant="contained" color="primary" href="/SignUp">
+                    Sign Up Now
                   </Button>
                 </Grid>
                 <Grid item>
-                  <Button variant="outlined" color="primary">
-                    Secondary action
+                  <Button variant="contained" color="default" href="/LogIn">
+                    Log In to Your Profile
                   </Button>
                 </Grid>
               </Grid>
@@ -139,10 +148,10 @@ export default function Album() {
       {/* Footer */}
       <footer className={classes.footer}>
         <Typography variant="h6" align="center" gutterBottom>
-          Footer
+          ProWard
         </Typography>
         <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-          Something here to give the footer a purpose!
+          Working to make E-Sports More Accessible
         </Typography>
         <Copyright />
       </footer>
@@ -150,3 +159,36 @@ export default function Album() {
     </React.Fragment>
   );
 }
+
+// {/* <Container className={classes.cardGrid} maxWidth="md">
+//           {/* End hero unit */}
+//           <Grid container spacing={4}>
+//             {cards.map((card) => (
+//               <Grid item key={card} xs={12} sm={6} md={4}>
+//                 <Card className={classes.card}>
+//                   <CardMedia
+//                     className={classes.cardMedia}
+//                     image="https://source.unsplash.com/random"
+//                     title="Image title"
+//                   />
+//                   <CardContent className={classes.cardContent}>
+//                     <Typography gutterBottom variant="h5" component="h2">
+//                       Heading
+//                     </Typography>
+//                     <Typography>
+//                       This is a media card. You can use this section to describe the content.
+//                     </Typography>
+//                   </CardContent>
+//                   <CardActions>
+//                     <Button size="small" color="primary">
+//                       View
+//                     </Button>
+//                     <Button size="small" color="primary">
+//                       Edit
+//                     </Button>
+//                   </CardActions>
+//                 </Card>
+//               </Grid>
+//             ))}
+//           </Grid>
+//         </Container> */}
